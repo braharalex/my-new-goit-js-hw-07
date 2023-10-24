@@ -42,6 +42,7 @@ function onEscKeyClose(evt) {
   // window.removeEventListener("keydown", onEscKeyClose);
   removeEscKeyPress();
  }
+ console.log(evt.code);
 }
 
 function removeEscKeyPress() {
