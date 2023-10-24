@@ -1,11 +1,11 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-console.log(galleryItems);
-
 const galleryEl = document.querySelector(".gallery");
-
+galleryEl.innerHTML = galleryMarkup;
+galleryEl.addEventListener("click", onOpenModal);
 const galleryMarkup = createGalleryMarkup(galleryItems);
+let modal = {};
 
 function createGalleryMarkup(items) {
  return items
@@ -24,24 +24,21 @@ function createGalleryMarkup(items) {
   .join("");
 }
 
-galleryEl.insertAdjacentHTML("beforeend", galleryMarkup);
-
-galleryEl.addEventListener("click", onClickOpenImage);
-
-function onClickOpenImage(evt) {
+function onOpenModal(evt) {
  evt.preventDefault();
-
  if (!evt.target.classList.contains("gallery__image")) {
   return;
  }
 
- console.log("є");
+ const imgSrc = evt.target.dataset.source;
+ modal = basicLightbox.create(`<img src="${imgSrc}"/>`);
+ modal.show();
+ window.addEventListener("keydown", onEscKeyClose);
 }
 
-const instance = basicLightbox.create(`
-    <h1>Dynamic Content</h1>
-    <p>You can set the content of the lightbox with JS.</p>
-`);
-
-console.log(instance);
-instance.show();
+function onEscKeyClose(evt) {
+ if (evt.code === "Escape") {
+  modal.close();
+  window.removeEventListener("keydown", onEscKeyClose);
+ }
+}
