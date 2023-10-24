@@ -2,9 +2,9 @@ import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
 const galleryEl = document.querySelector(".gallery");
-galleryEl.innerHTML = galleryMarkup;
 galleryEl.addEventListener("click", onOpenModal);
 const galleryMarkup = createGalleryMarkup(galleryItems);
+galleryEl.innerHTML = galleryMarkup;
 let modal = {};
 
 function createGalleryMarkup(items) {
@@ -39,6 +39,13 @@ function onOpenModal(evt) {
 function onEscKeyClose(evt) {
  if (evt.code === "Escape") {
   modal.close();
+  // window.removeEventListener("keydown", onEscKeyClose);
+  removeEscKeyPress();
+ }
+}
+
+function removeEscKeyPress() {
+ if (modal.visible()) {
   window.removeEventListener("keydown", onEscKeyClose);
  }
 }
